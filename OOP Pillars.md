@@ -2,6 +2,7 @@
 
 ⚠️ If an interviewer asks only one OOP question, it is often:
 
+
 > **"Explain the 4 pillars of OOP with examples."**
 
 Master Day 2 thoroughly.
