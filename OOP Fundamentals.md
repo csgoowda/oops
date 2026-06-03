@@ -896,29 +896,157 @@ Destructor: Object destroyed for age = 20
 ---
 
 # Topic 6: Static Keyword
+Alright chethan, let’s dive into **Static Keyword in C++** with full notes and examples so you get the complete picture.
 
-## Static Variable
+---
 
-Shared by all objects.
+# 📘 Full Notes: `static` Keyword in C++
+
+## 🔹 What is `static`?
+The `static` keyword in C++ changes the **lifetime** and **scope** of variables, functions, and class members.  
+It means:  
+- The variable/function **retains its value** between calls.  
+- Memory is allocated **only once** for the lifetime of the program.  
+
+---
+
+## 🔹 Uses of `static`
+
+### 1. Static Local Variables
+- Declared inside a function.  
+- Value is **retained** between function calls.  
+- Initialized only once.
 
 ```cpp
-class Student
-{
+#include <iostream>
+using namespace std;
+
+void counter() {
+    static int count = 0;  // static local variable
+    count++;
+    cout << "Count: " << count << endl;
+}
+
+int main() {
+    counter();  // Count: 1
+    counter();  // Count: 2
+    counter();  // Count: 3
+    return 0;
+}
+```
+
+👉 Without `static`, `count` would reset to 0 every time.
+
+---
+
+### 2. Static Global Variables
+- Declared outside functions.  
+- Scope is limited to the file (not accessible from other files).  
+
+```cpp
+#include <iostream>
+using namespace std;
+
+static int globalVar = 10;  // static global variable
+
+int main() {
+    cout << "GlobalVar: " << globalVar << endl;
+    return 0;
+}
+```
+
+👉 Normal global variables can be accessed across files, but `static` restricts them to the current file.
+
+---
+
+### 3. Static Data Members in Class
+- Shared by **all objects** of the class.  
+- Only one copy exists, no matter how many objects are created.  
+
+```cpp
+#include <iostream>
+using namespace std;
+
+class Student {
 public:
-    static int count;
+    static int count;  // static data member
+
+    Student() {
+        count++;
+    }
 };
+
+int Student::count = 0;  // initialize static member
+
+int main() {
+    Student s1, s2, s3;
+    cout << "Number of students: " << Student::count << endl;
+    return 0;
+}
+```
+
+👉 Output:
+```
+Number of students: 3
 ```
 
 ---
 
-### Example
+### 4. Static Member Functions
+- Belong to the class, not to any object.  
+- Can access only **static data members**.  
+- Called using `ClassName::functionName()`.
 
-Suppose 100 students exist.
+```cpp
+#include <iostream>
+using namespace std;
 
-Instead of storing college name 100 times,
+class Employee {
+private:
+    static int salary;
 
-store it once using static.
+public:
+    static void setSalary(int s) {
+        salary = s;
+    }
 
+    static void showSalary() {
+        cout << "Salary: " << salary << endl;
+    }
+};
+
+int Employee::salary = 0;  // initialize static member
+
+int main() {
+    Employee::setSalary(5000);
+    Employee::showSalary();
+    return 0;
+}
+```
+
+👉 Output:
+```
+Salary: 5000
+```
+
+---
+
+## 🔹 Key Points
+- **Static local variable** → retains value between function calls.  
+- **Static global variable** → scope limited to file.  
+- **Static data member** → shared among all objects.  
+- **Static member function** → can access only static members.  
+
+---
+
+✅ **Summary:**  
+The `static` keyword is used to **control lifetime and scope**. It’s powerful for:  
+- Remembering values between calls.  
+- Restricting global scope.  
+- Sharing data among all objects of a class.  
+- Creating class-level functions.  
+
+---
 ---
 
 # Most Asked Day-1 Interview Questions
